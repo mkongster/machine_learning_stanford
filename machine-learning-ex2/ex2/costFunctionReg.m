@@ -17,11 +17,18 @@ grad = zeros(size(theta));
 %               Compute the partial derivatives and set grad to the partial
 %               derivatives of the cost w.r.t. each parameter in theta
 
+h = sigmoid(X*theta);
+len_theta = length(theta);
 
+J = (1/m) * (-y' * log(h) - (1-y)' * log(1-h)) + (lambda/(2*m)) * (theta(2:len_theta))' * theta(2:len_theta);
 
+theta_0 = theta;
+theta_0(1) = 0;
 
-
-
+% NOT this?  even though same gradient values?
+% grad = ((1/m) * X' * (h-y)) + (lambda/m) * theta_0';
+% because it turns it into a 28x28 matrix, instead of 28x1
+grad = ((1/m) * (h-y)' * X) + (lambda/m) * theta_0';
 % =============================================================
 
 end
